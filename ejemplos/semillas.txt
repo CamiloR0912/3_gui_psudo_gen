@@ -1,0 +1,15 @@
+# Archivo de ejemplo con semillas para demostrar la carga externa.
+# Formato: enteros no negativos separados por coma, punto y coma,
+# tabulador o salto de línea. Las líneas que empiezan con # se ignoran.
+#
+# La primera semilla es la que usa cada método por defecto.
+5731
+2222
+5678
+12345
+987654
+31415
+27182
+16180
+86420
+42
