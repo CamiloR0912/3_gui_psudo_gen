@@ -27,7 +27,6 @@ from .pruebas import (
     PruebaChi2,
     PruebaKS,
     PruebaPoker,
-    PruebaRachas,
     ResultadoPrueba,
 )
 

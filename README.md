@@ -1,17 +1,19 @@
 # Biblioteca de Generación y Validación de Números Pseudoaleatorios
 
-Módulo en Python desarrollado desde cero (*from scratch*) para la generación, transformación y validación estadística de secuencias de números pseudoaleatorios, según los lineamientos teóricos del curso de **Simulación por Computador** (UPTC).
+Módulo en Python desarrollado desde cero (*from scratch*) para la generación, transformación y validación estadística de secuencias de números pseudoaleatorios, según los lineamientos teóricos del curso de **Simulación de computadores** (UPTC).
 
 Los generadores no usan `random` ni `numpy.random`. La librería `scipy` se utiliza únicamente para obtener valores críticos de las distribuciones (Z, χ², KS) en las pruebas estadísticas.
 
 Diseñado con una arquitectura modular para ser reutilizado en los puntos 2 (caminatas aleatorias) y 4 (EpiSim) del taller.
 
+> **Pruebas incluidas:** medias, varianza, Chi-cuadrado, Kolmogorov-Smirnov y Póker. La prueba de rachas (*runs test*) no se incluye en este módulo por indicación del docente.
+
 ---
 
-## 📁 Estructura del Módulo
+## Estructura del Módulo
 
 ```text
-generador_numeros_pruebas/
+3_gui_psudo_gen/                # Raíz del proyecto (es a la vez la aplicación y el paquete)
 ├── gui.py                      # Interfaz gráfica (tkinter)
 ├── main.py                     # Interfaz de consola (menú interactivo y modo --demo)
 ├── requirements.txt            # Dependencias
@@ -30,12 +32,11 @@ generador_numeros_pruebas/
 ├── pruebas/
 │   ├── __init__.py
 │   ├── resultado.py            # Clase ResultadoPrueba (interfaz común de resultados)
-│   ├── prueba_medias.py        # Propiedad I: E[R_i] = 0.5 (Z normal)
-│   ├── prueba_varianza.py      # Propiedad I: Var(R_i) = 1/12 (Chi-cuadrado n-1 gl)
-│   ├── prueba_chi2.py          # Propiedad II: Uniformidad en [0, 1) con k intervalos
-│   ├── prueba_ks.py            # Propiedad II: Kolmogorov-Smirnov (D_max vs empírica)
-│   ├── prueba_poker.py         # Propiedad III: Independencia (7 manos sobre 5 decimales)
-│   └── prueba_rachas.py        # Propiedad III: Independencia (rachas arriba/abajo de un umbral)
+│   ├── prueba_medias.py        # Propiedad 1: E[R_i] = 0.5 (Z normal)
+│   ├── prueba_varianza.py      # Propiedad 1: Var(R_i) = 1/12 (Chi-cuadrado n-1 gl)
+│   ├── prueba_chi2.py          # Propiedad 2: Uniformidad en [0, 1) con k intervalos
+│   ├── prueba_ks.py            # Propiedad 2: Kolmogorov-Smirnov (D_max vs empírica)
+│   └── prueba_poker.py         # Propiedad 3: Independencia (7 manos sobre 5 decimales)
 └── utilidades/
     ├── __init__.py
     ├── archivo_manager.py      # Carga/guardado de semillas y secuencias en .txt y .csv
@@ -44,21 +45,27 @@ generador_numeros_pruebas/
 
 ---
 
-## 🛠️ Requisitos e Instalación
+## Requisitos e Instalación
 
 - Python 3.10+
 - Dependencias (necesarias incluso si solo se usan los generadores, porque el paquete las importa al cargarse):
   ```bash
   pip install -r requirements.txt
   ```
-- Copiar la carpeta completa `generador_numeros_pruebas/` dentro del proyecto donde se vaya a usar (o agregar su carpeta padre al `sys.path`) e importar:
+- Todos los comandos se ejecutan desde la carpeta raíz del proyecto:
+  ```bash
+  python gui.py           # Interfaz gráfica
+  python main.py          # Interfaz de consola
+  ```
+  `gui.py` y `main.py` registran automáticamente la carpeta raíz como el paquete `generador_numeros_pruebas`, por lo que no hay que instalar nada adicional.
+- **Uso como biblioteca en otros puntos del taller.** El nombre de la carpeta raíz (`3_gui_psudo_gen`) no es un identificador válido de Python (empieza por un número), así que no se puede importar directamente. Copie la carpeta (sin `venv/` ni `salidas/`) dentro del proyecto donde se vaya a usar con el nombre `generador_numeros_pruebas/` (o agregue su carpeta padre al `sys.path`) e importe:
   ```python
   import generador_numeros_pruebas as gnp
   ```
 
 ---
 
-## 🪟 Interfaz gráfica (`gui.py`)
+## Interfaz gráfica (`gui.py`)
 
 ```bash
 python gui.py
@@ -73,7 +80,7 @@ La interfaz usa `tkinter` (incluido con Python), por lo que no requiere dependen
    - *Automático:* «Examinar...» abre un archivo `.txt` o `.csv` (por defecto la carpeta `ejemplos/`).
    - *Semilla a usar:* selecciona cuál de las semillas cargadas usan los generadores en la ejecución.
 2. **Métodos de generación:** casillas para elegir uno o varios métodos. El botón «Parámetros» de cada uno permite modificar `a`, `c`, `m`, `n`, `j`, `k`, límites de la uniforme, `μ` y `σ` (admite potencias como `2**32`). Para el Congruencial Lineal se advierte si los parámetros no cumplen Hull-Dobell.
-3. **Pruebas estadísticas:** casillas para elegir cuáles de las 6 pruebas ejecutar.
+3. **Pruebas estadísticas:** casillas para elegir cuáles de las 5 pruebas ejecutar.
 4. **Configuración:** cantidad de números `n`, nivel de significancia `α`, intervalos de Chi² y subgrupos de los gráficos de medias y varianza.
 
 Botones: **«Generar y validar»** ejecuta todo; **«Exportar tablas a CSV...»** guarda las secuencias y la tabla comparativa; **«Guardar todos los gráficos...»** guarda los histogramas y los gráficos de todas las pruebas en `.png`.
@@ -88,7 +95,7 @@ Botones: **«Generar y validar»** ejecuta todo; **«Exportar tablas a CSV...»*
 
 ---
 
-## 🖥️ Interfaz de consola (`main.py`)
+## Interfaz de consola (`main.py`)
 
 ```bash
 python main.py          # Menú interactivo
@@ -100,7 +107,7 @@ python main.py --demo   # Demostración completa sin preguntas (guarda todo en s
 | 1. Semillas | Ingreso manual (lista separada por comas) o carga desde archivo `.txt` / `.csv` (por defecto `ejemplos/semillas.txt`). |
 | 2. Seleccionar métodos | Selección múltiple (`1,3,5` o `t` para todos) entre Cuadrados Medios, Congruencial Lineal, Multiplicativo, Aditivo, Uniforme y Normal. Permite ajustar los parámetros de cada método o usar los valores por defecto. |
 | 3. Generar secuencias | Genera `n` números por método, muestra la tabla `i, Xi, Ri, Ni` en consola y la exporta a `salidas/secuencia_<metodo>.csv`. |
-| 4. Pruebas estadísticas | Selección múltiple de las 6 pruebas; imprime cada resultado y guarda sus gráficos en `salidas/prueba_<prueba>_<metodo>.png`. |
+| 4. Pruebas estadísticas | Selección múltiple de las 5 pruebas; imprime cada resultado y guarda sus gráficos en `salidas/prueba_<prueba>_<metodo>.png`. |
 | 5. Histogramas | Histograma de cada método con la densidad teórica superpuesta, en `salidas/histograma_<metodo>.png`. |
 | 6. Comparar métodos | Tabla resumen método × prueba (✓/✗), tiempo de generación y período observado; se exporta a `salidas/comparacion_metodos.csv`. |
 | 7. Configuración | `n`, nivel de significancia α, intervalos de Chi², subgrupos de los gráficos, mostrar u ocultar gráficos y carpeta de salida. |
@@ -114,7 +121,7 @@ python main.py --demo   # Demostración completa sin preguntas (guarda todo en s
 
 ---
 
-## 🚀 Inicio Rápido (uso como biblioteca)
+## Inicio Rápido (uso como biblioteca)
 
 ```python
 import generador_numeros_pruebas as gnp
@@ -135,7 +142,7 @@ print(gnp.PruebaMedias(ri).ejecutar())
 
 ---
 
-## ⚙️ Uso de los generadores en simulaciones
+## Uso de los generadores en simulaciones
 
 ### Los generadores conservan su estado
 
@@ -189,13 +196,13 @@ for s in semillas:
 | Congruencial Lineal (parametrización de clase) | `desde_parametros_clase(x0, k, c, g)` → `a = 1+2k`, `m = 2^g` | hasta 2^g | Ejemplos didácticos |
 | Cuadrados Medios | `n_digitos=4` | muy corto (decenas a miles) | Solo fines didácticos |
 
-> ⚠️ **El período debe ser mucho mayor que la cantidad de números que usa la simulación.** Por ejemplo, un LCG con `m=1024` repite exactamente la misma secuencia cada 1024 números: en una caminata de 1.000.000 de pasos, el mismo patrón se repetiría casi 1000 veces. Del mismo modo, Cuadrados Medios con semilla 5731 entra en un ciclo de longitud 4 después de 71 iteraciones (verificable con `detectar_ciclo()`).
+> **El período debe ser mucho mayor que la cantidad de números que usa la simulación.** Por ejemplo, un LCG con `m=1024` repite exactamente la misma secuencia cada 1024 números: en una caminata de 1.000.000 de pasos, el mismo patrón se repetiría casi 1000 veces. Del mismo modo, Cuadrados Medios con semilla 5731 entra en un ciclo de longitud 4 después de 71 iteraciones (verificable con `detectar_ciclo()`).
 
-> ⚠️ **Normalización.** Por defecto `R_i = x_i / m ∈ [0, 1)`. La opción `normalizar_con_m_menos_1=True` usa `x_i / (m−1)` y puede producir `R_i = 1.0`, lo cual rompe cálculos como `int(R_i * n)` para escoger un índice. Para simulación se recomienda dejar el valor por defecto.
+> **Normalización.** Por defecto `R_i = x_i / m ∈ [0, 1)`. La opción `normalizar_con_m_menos_1=True` usa `x_i / (m−1)` y puede producir `R_i = 1.0`, lo cual rompe cálculos como `int(R_i * n)` para escoger un índice. Para simulación se recomienda dejar el valor por defecto.
 
 ---
 
-## 📚 Referencia de generadores
+## Referencia de generadores
 
 ### `CuadradosMedios(x0, n_digitos=4)`
 
@@ -257,7 +264,7 @@ Métodos adicionales:
 
 ---
 
-## 🔄 Transformaciones
+## Transformaciones
 
 Funciones que convierten una lista de `R_i ~ U(0,1)` en otras distribuciones. Se importan desde el paquete raíz.
 
@@ -278,7 +285,7 @@ beta = gnp.uniforme([gen.siguiente()], 0.3, 0.5)[0]
 
 ---
 
-## 🔬 Pruebas estadísticas
+## Pruebas estadísticas
 
 Todas las pruebas operan exclusivamente sobre la secuencia normalizada `R_i ∈ [0, 1)` (no sobre `x_i` ni sobre números transformados). Se usan así: `Prueba(ri, ...).ejecutar()`, que retorna un objeto `ResultadoPrueba`.
 
@@ -289,7 +296,6 @@ Todas las pruebas operan exclusivamente sobre la secuencia normalizada `R_i ∈ 
 | `PruebaChi2(ri, k_intervalos=10, alpha=0.05, rango=(0.0, 1.0))` | `k_intervalos`: número de subintervalos | Uniformidad (Prop. II) |
 | `PruebaKS(ri, alpha=0.05)` | `alpha` | Uniformidad (Prop. II) |
 | `PruebaPoker(ri, alpha=0.05, n_digitos=5)` | `n_digitos`: decimales analizados | Independencia (Prop. III) |
-| `PruebaRachas(ri, alpha=0.05, umbral=0.5)` | `umbral`: valor que separa '+' y '−' | Independencia (Prop. III) |
 
 ```python
 res_medias = gnp.PruebaMedias(ri, alpha=0.05).ejecutar()
@@ -297,11 +303,10 @@ res_var    = gnp.PruebaVarianza(ri, alpha=0.05).ejecutar()
 res_chi2   = gnp.PruebaChi2(ri, k_intervalos=10, alpha=0.05).ejecutar()
 res_ks     = gnp.PruebaKS(ri, alpha=0.05).ejecutar()
 res_poker  = gnp.PruebaPoker(ri, alpha=0.05).ejecutar()
-res_rachas = gnp.PruebaRachas(ri, alpha=0.05, umbral=0.5).ejecutar()
 print(res_medias)
 ```
 
-> ⚠️ La prueba de Póker analiza 5 decimales. Con Cuadrados Medios de 4 dígitos, `R_i` tiene solo 4 decimales y el quinto siempre es 0, lo que sesga el resultado.
+> La prueba de Póker analiza 5 decimales. Con Cuadrados Medios de 4 dígitos, `R_i` tiene solo 4 decimales y el quinto siempre es 0, lo que sesga el resultado.
 
 ### `ResultadoPrueba`
 
@@ -324,11 +329,10 @@ print(res_medias)
 | **Chi-Cuadrado** | $\chi_0^2 = \sum_{i=1}^k \frac{(O_i - E_i)^2}{E_i}$ | $\chi_0^2 \le \chi^2_{1-\alpha, k-1}$ |
 | **Kolmogorov-Smirnov** | $D = \max(D^+, D^-)$ | $D \le D_{\alpha, N}$ |
 | **Póker** | $\chi_0^2 = \sum_{i=1}^7 \frac{(O_i - E_i)^2}{E_i}$ | $\chi_0^2 \le \chi^2_{1-\alpha, 6}$ (D, O, T, K, F, P, Q) |
-| **Rachas** | $Z_0 = \frac{b - \mu_b}{\sigma_b}$, con $\mu_b = \frac{2n_1n_2}{N} + 1$ | $\mu_b - Z_{\alpha/2}\sigma_b \le b \le \mu_b + Z_{\alpha/2}\sigma_b$ |
 
 ---
 
-## 📂 Gestión de Archivos (`ArchivoManager`)
+## Gestión de Archivos (`ArchivoManager`)
 
 ```python
 from generador_numeros_pruebas.utilidades import ArchivoManager
@@ -348,7 +352,7 @@ ArchivoManager.exportar_csv("resultados.csv", ri_list=ri, xi_list=xi, ni_list=ni
 
 ---
 
-## 📊 Generación de Gráficos (`Visualizacion`)
+## Generación de Gráficos (`Visualizacion`)
 
 ```python
 from generador_numeros_pruebas.utilidades import Visualizacion
@@ -365,7 +369,6 @@ Todos los métodos aceptan `guardar_en="archivo.png"` (guarda a 300 dpi) y `most
 | `prueba_chi2(resultado)` | Frecuencias observadas vs. esperadas por intervalo. |
 | `prueba_ks(resultado)` | Función empírica acumulada vs. F(x) = x, destacando D_max. |
 | `prueba_poker(resultado)` | Frecuencias observadas vs. esperadas por mano. |
-| `prueba_rachas(resultado)` | Rachas observadas vs. esperadas con intervalo de confianza. |
 
 ```python
 Visualizacion.histograma_generacion(ri, titulo="Congruencial Lineal", guardar_en="hist.png")
@@ -375,12 +378,12 @@ Visualizacion.prueba_chi2(res_chi2, guardar_en="chi2.png", mostrar=False)
 
 ---
 
-## 💻 Cuadro técnico del entorno de desarrollo
+## Cuadro técnico del entorno de desarrollo
 
 | Elemento | Especificación |
 | :--- | :--- |
-| Lenguaje | Python 3.14.5 |
+| Lenguaje | Python 3.14.7 |
 | Librerías | NumPy 2.5.3, SciPy 1.18.1, Matplotlib 3.11.2 |
 | Sistema operativo | Windows 11 Home Single Language (versión 10.0.26200), 64 bits |
-| Procesador | 12th Gen Intel® Core™ i5-12450H (8 núcleos, 12 hilos) |
-| Memoria RAM | 8 GB (7.7 GB utilizables) |
+| Procesador | Intel Ultra 7 155H (16 núcleos, 22 hilos) |
+| Memoria RAM | 24 GB (23.7 GB utilizables) |

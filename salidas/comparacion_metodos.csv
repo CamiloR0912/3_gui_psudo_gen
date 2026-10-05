@@ -1,7 +1,7 @@
-metodo,parametros,medias_estadistico,medias_aprobada,varianza_estadistico,varianza_aprobada,chi2_estadistico,chi2_aprobada,ks_estadistico,ks_aprobada,poker_estadistico,poker_aprobada,rachas_estadistico,rachas_aprobada,pruebas_aprobadas,tiempo_ms,periodo_observado
-Cuadrados Medios,"x0=5731, n=4",0.505883,SI,0.053380,NO,1302.520000,NO,0.188000,NO,11224.330026,NO,498.000000,SI,2/6,0.511,4 (desde i=71)
-Congruencial Lineal (mixto),"x0=5731, a=1664525, c=1013904223, m=4294967296",0.492135,SI,0.082753,SI,8.460000,SI,0.025641,SI,3.125661,SI,481.000000,SI,6/6,0.322,> 1000
-Congruencial Multiplicativo,"x0=5731, a=16807, m=2147483647",0.511665,SI,0.084924,SI,12.340000,SI,0.031386,SI,0.631614,SI,498.000000,SI,6/6,0.229,> 1000
-Congruencial Aditivo (Fibonacci retrasado),"j=24, k=55, m=4294967296, semillas iniciales vía LCG x0=5731",0.500307,SI,0.088171,SI,10.340000,SI,0.032160,SI,4.109788,SI,510.000000,SI,6/6,0.289,N/D
-"Uniforme U(a, b) (transformación)","U(0.0, 10.0), LCG base x0=5731",0.492135,SI,0.082753,SI,8.460000,SI,0.025641,SI,3.125661,SI,481.000000,SI,6/6,0.344,> 1000
-"Normal N(μ, σ²) Box-Muller (transformación)","N(0.0, 1.0²), LCG base x0=5731",0.492135,SI,0.082753,SI,8.460000,SI,0.025641,SI,3.125661,SI,481.000000,SI,6/6,0.613,> 1000
+metodo,parametros,medias_estadistico,medias_aprobada,varianza_estadistico,varianza_aprobada,chi2_estadistico,chi2_aprobada,ks_estadistico,ks_aprobada,poker_estadistico,poker_aprobada,pruebas_aprobadas,tiempo_ms,periodo_observado
+Cuadrados Medios,"x0=5731, n=4",0.505883,SI,0.053380,NO,1302.520000,NO,0.188000,NO,11224.330026,NO,1/5,0.516,4 (desde i=71)
+Congruencial Lineal (mixto),"x0=5731, a=1664525, c=1013904223, m=4294967296",0.492135,SI,0.082753,SI,8.460000,SI,0.025641,SI,3.125661,SI,5/5,0.300,> 1000
+Congruencial Multiplicativo,"x0=5731, a=16807, m=2147483647",0.511665,SI,0.084924,SI,12.340000,SI,0.031386,SI,0.631614,SI,5/5,0.223,> 1000
+Congruencial Aditivo (Fibonacci retrasado),"j=24, k=55, m=4294967296, semillas iniciales vía LCG x0=5731",0.500307,SI,0.088171,SI,10.340000,SI,0.032160,SI,4.109788,SI,5/5,0.277,N/D
+"Uniforme U(a, b) (transformación)","U(0.0, 10.0), LCG base x0=5731",0.492135,SI,0.082753,SI,8.460000,SI,0.025641,SI,3.125661,SI,5/5,0.378,> 1000
+"Normal N(μ, σ²) Box-Muller (transformación)","N(0.0, 1.0²), LCG base x0=5731",0.492135,SI,0.082753,SI,8.460000,SI,0.025641,SI,3.125661,SI,5/5,0.562,> 1000

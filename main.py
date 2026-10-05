@@ -76,7 +76,6 @@ PRUEBAS = {
     "chi2": "Prueba Chi-Cuadrado",
     "ks": "Prueba Kolmogorov-Smirnov",
     "poker": "Prueba de Póker",
-    "rachas": "Prueba de Rachas",
 }
 
 # Parámetros por defecto. Los congruenciales usan parámetros de período largo.
@@ -437,9 +436,7 @@ def ejecutar_prueba(clave_prueba, ri, estado):
         return gnp.PruebaChi2(ri, k_intervalos=estado.k_intervalos, alpha=estado.alpha).ejecutar()
     if clave_prueba == "ks":
         return gnp.PruebaKS(ri, alpha=estado.alpha).ejecutar()
-    if clave_prueba == "poker":
-        return gnp.PruebaPoker(ri, alpha=estado.alpha).ejecutar()
-    return gnp.PruebaRachas(ri, alpha=estado.alpha).ejecutar()
+    return gnp.PruebaPoker(ri, alpha=estado.alpha).ejecutar()
 
 
 def graficar_prueba(clave_prueba, resultado, ri, ruta, estado, mostrar):
@@ -454,9 +451,7 @@ def graficar_prueba(clave_prueba, resultado, ri, ruta, estado, mostrar):
         return Visualizacion.prueba_chi2(resultado, guardar_en=ruta, mostrar=mostrar)
     if clave_prueba == "ks":
         return Visualizacion.prueba_ks(resultado, guardar_en=ruta, mostrar=mostrar)
-    if clave_prueba == "poker":
-        return Visualizacion.prueba_poker(resultado, guardar_en=ruta, mostrar=mostrar)
-    return Visualizacion.prueba_rachas(resultado, guardar_en=ruta, mostrar=mostrar)
+    return Visualizacion.prueba_poker(resultado, guardar_en=ruta, mostrar=mostrar)
 
 
 def menu_pruebas(estado, pruebas=None, graficar=None, silencioso=False):
@@ -575,7 +570,7 @@ def periodo_observado(clave, datos):
 
 
 ABREVIATURAS_PRUEBAS = {"medias": "Medias", "varianza": "Varianza", "chi2": "Chi²",
-                        "ks": "KS", "poker": "Póker", "rachas": "Rachas"}
+                        "ks": "KS", "poker": "Póker"}
 
 
 def filas_comparacion(estado):
@@ -674,7 +669,7 @@ def menu_configuracion(estado):
 def demostracion(estado):
     """
     Ejecuta el flujo completo con valores por defecto: carga el archivo de
-    semillas de ejemplo, genera con todos los métodos, ejecuta las 6 pruebas,
+    semillas de ejemplo, genera con todos los métodos, ejecuta las 5 pruebas,
     guarda todos los gráficos y exporta las tablas.
     """
     titulo("Demostración completa")

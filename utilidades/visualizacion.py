@@ -395,35 +395,3 @@ class Visualizacion:
 
         Visualizacion._finalizar_figura(fig, guardar_en, mostrar)
         return fig
-
-    @staticmethod
-    def prueba_rachas(resultado, guardar_en=None, mostrar=True):
-        """
-        Gráfico para la Prueba de Rachas:
-        Cantidad de rachas observadas vs esperadas con intervalo de confianza.
-        """
-        det = resultado.detalles
-        r_obs = det.get("rachas_observadas", resultado.estadistico)
-        r_esp = det.get("rachas_esperadas", resultado.valor_critico)
-        lim_inf = det.get("limite_inferior", 0)
-        lim_sup = det.get("limite_superior", 0)
-
-        fig, ax = plt.subplots(figsize=(8, 5))
-        categorias = ["Límite Inferior", "Rachas Observadas", "Rachas Esperadas", "Límite Superior"]
-        valores = [lim_inf, r_obs, r_esp, lim_sup]
-        colores = ["#E74C3C", "#2ECC71" if resultado.aprobada else "#E67E22", "#3498DB", "#E74C3C"]
-
-        barras = ax.bar(categorias, valores, color=colores, width=0.5, edgecolor="black")
-        ax.set_title(f"Prueba de Rachas - {'APROBADA' if resultado.aprobada else 'RECHAZADA'}",
-                     fontsize=12, fontweight="bold")
-        ax.set_ylabel("Cantidad de Rachas", fontsize=10)
-
-        for bar, val in zip(barras, valores):
-            ax.annotate(f"{val:.2f}",
-                        xy=(bar.get_x() + bar.get_width() / 2, val),
-                        xytext=(0, 4), textcoords="offset points",
-                        ha="center", va="bottom", fontsize=9)
-
-        ax.grid(axis="y", linestyle="--", alpha=0.5)
-        Visualizacion._finalizar_figura(fig, guardar_en, mostrar)
-        return fig
