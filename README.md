@@ -387,3 +387,13 @@ Visualizacion.prueba_chi2(res_chi2, guardar_en="chi2.png", mostrar=False)
 | Sistema operativo | Windows 11 Home Single Language (versión 10.0.26200), 64 bits |
 | Procesador | Intel Ultra 7 155H (16 núcleos, 22 hilos) |
 | Memoria RAM | 24 GB (23.7 GB utilizables) |
+
+---
+
+## Uso de herramientas de inteligencia artificial
+
+De acuerdo con los lineamientos del taller, que prohíben el uso de inteligencia artificial para implementar los algoritmos de generación y validación:
+
+- **Generadores** (`generadores/`: cuadrados medios, congruenciales lineal, multiplicativo y aditivo, y transformaciones) y **pruebas estadísticas** (`pruebas/`): implementados por el grupo desde cero, sin herramientas de inteligencia artificial.
+- **Lectura y exportación de archivos** (`utilidades/archivo_manager.py`): desarrollada por el grupo.
+- **Apoyo de un asistente de IA** (Claude, de Anthropic): documentación (este README y comentarios del código) programación de las rutinas de generación de gráficas (`utilidades/visualizacion.py`) y de la interfaz gráfica (`gui.py`).
